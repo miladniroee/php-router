@@ -3,6 +3,7 @@
 class Route
 {
     private static string $Url;
+    private static string $Uri;
 
     public static function get($Url, $Params)
     {
