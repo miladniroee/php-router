@@ -3,7 +3,7 @@
 class Route
 {
     private static string $Url;
-    private static string $Uri;
+    private static array $Parameters = [];
 
     public static function get($Url, $Params)
     {
@@ -38,12 +38,33 @@ class Route
         endif;
     }
 
-    private static function CheckURL():bool
+    private static function CheckURL(): bool
     {
+        // uri that programmer define
         $Uri = array_values(array_filter(explode('/', self::$Url)));
+
+        //client url
         $Url = array_filter(explode('/', $_GET['param']));
+
+        /**
+         * Url and Uri are not at same size.
+         * so, not this one :))
+         * @return false
+         */
+        if (count($Uri) !== count($Url)):
+            return false;
+        endif;
+
+        /**
+         * check parameter by every section
+         * if there is variable in uri, it will add to $Parameter array
+         */
         foreach ($Uri as $Key => $Params):
+            
+            //if url has {*} accept whatever in it
             if (preg_match("/\{(.*?)\}/", $Params)):
+                $Param = str_replace(['{', '}'], '', $Params);
+                self::$Parameters[$Param] = $Url[$Key];
                 continue;
             else:
                 if ($Params !== $Url[$Key]):
@@ -51,6 +72,8 @@ class Route
                 endif;
             endif;
         endforeach;
+
+        // client url truly found
         return true;
     }
 
