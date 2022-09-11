@@ -7,7 +7,9 @@ class Route
 
     public static function get($Url, $Params)
     {
+        // Add Url to class
         self::$Url = $Url;
+        // Check request to be GET
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && self::CheckURL()) {
             self::InitController($Params);
         }
@@ -15,8 +17,9 @@ class Route
 
     public static function post($Url, $Params)
     {
+        // Add Url to class
         self::$Url = $Url;
-
+        // Check request to be POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && self::CheckURL()) {
             self::InitController($Params);
         }
