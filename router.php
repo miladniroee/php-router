@@ -5,6 +5,14 @@ class Route
     private static string $Url;
     private static array $Parameters = [];
 
+    public static function any($Url, $Params)
+    {
+        self::$Url = $Url;
+        if (self::CheckURL()) {
+            self::InitController($Params);
+        }
+    }
+    
     public static function get($Url, $Params)
     {
         // Add Url to class
