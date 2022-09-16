@@ -32,6 +32,20 @@ class Route
             self::InitController($Params);
         }
     }
+	
+	public static function put($Url, $Params)
+    {
+        // Add Url to class
+        self::$Url = $Url;
+        // Check request to be PUT
+		
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
+		isset($_POST['_method']) &&
+		$_POST['_method'] === 'PUT' &&
+		self::CheckURL()) {
+            self::InitController($Params);
+        }
+    }
 
     private static function InitController($Params)
     {
